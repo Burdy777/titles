@@ -3,16 +3,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { FilmsService } from 'src/app/domain/services/films.services';
 import { RxwebValidators, RxFormBuilder } from '@rxweb/reactive-form-validators';
-import { TitleInterface } from 'src/app/domain/model/title.interface';
+import { FilmInterface } from 'src/app/domain/model/title.interface';
 
 @Component({
   selector: 'app-dialog-common',
   templateUrl: './dialog-common.component.html',
-  styleUrls: ['./dialog-common.component.scss']
+  styleUrls: ['./dialog-common.component.scss'],
 })
 export class DialogCommonComponent implements OnInit {
   formGroup:FormGroup;
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: TitleInterface, private fb:RxFormBuilder,
+  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: FilmInterface, private fb:RxFormBuilder,
   @Inject('FilmsService') public filmsService:FilmsService ) { }
 
   ngOnInit() {
@@ -22,9 +22,9 @@ export class DialogCommonComponent implements OnInit {
 
   private buildForm(): FormGroup{
     return this.fb.group({
-      originalTitle: ['', [RxwebValidators.required(),RxwebValidators.minLength({value:2})]],
+      originalTitle: ['', [RxwebValidators.required(),RxwebValidators.minLength({value:3})]],
       startYear: ['', [RxwebValidators.minLength({value:4}),RxwebValidators.required()]],
-      genres: ['',[RxwebValidators.required(),RxwebValidators.minLength({value:2})]]
+      genres: ['',[RxwebValidators.required(),RxwebValidators.minLength({value:3})]]
     })
     
   }

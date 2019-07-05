@@ -25,7 +25,7 @@ constructor(@Inject('FilmsService') public filmService:FilmsService, private fb:
 
   private buildForm():FormGroup {
     return this.formGroup = this.fb.group({
-      title: ['', [RxwebValidators.required(), RxwebValidators.minLength({value:2})]],
+      title: ['', [RxwebValidators.required(), RxwebValidators.minLength({value:3})]],
       dateBegin: ['', RxwebValidators.minLength({value:4})]
     })
   }

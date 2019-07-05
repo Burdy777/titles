@@ -1,4 +1,4 @@
-export interface TitleInterface {
+export interface FilmInterface {
 tconst: string,
 titleType: string,
 primaryTitle: string,
