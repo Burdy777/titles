@@ -1,0 +1,55 @@
+
+<div id="container_title">
+    <h1 id="main_title">Retrouvez vos livres préférés!</h1>
+</div> 
+<div id="container">
+  <form [formGroup]="formGroup">
+    <mat-form-field class="form_mat_field">
+      <input matInput formControlName="title"  placeholder="titre" required>
+      <mat-error>
+          {{formGroup.controls['title']['errorMessage'] }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form_mat_field">
+        <input matInput type="number" formControlName="dateBegin" placeholder="année de sortie minimum">
+        <mat-error>
+            {{formGroup.controls['dateBegin']['errorMessage'] }}
+        </mat-error>  
+      </mat-form-field>
+ 
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="find(form.value)">Rechercher</button>
+  </form>
+</div>
+
+<div *ngIf="ELEMENT_DATA.length > 0">
+    <div id="container_table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="originalTitle">
+            <th mat-header-cell *matHeaderCellDef> Titre </th>
+            <td mat-cell *matCellDef="let element"> {{ element.primaryTitle}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="startYear">
+            <th mat-header-cell *matHeaderCellDef> Année de création </th>
+            <td mat-cell *matCellDef="let element"> {{element.startYear}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="genres">
+            <th mat-header-cell *matHeaderCellDef> Genres </th>
+            <td mat-cell *matCellDef="let element"> {{element.genres}}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="button">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element"> <button mat-button color="primary" (click)="openDialog(element)">modifier</button></td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+    </div>
+
+</div>

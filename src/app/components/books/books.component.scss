@@ -1,0 +1,27 @@
+#container_title {
+    text-align: center;
+}
+#container {
+display: flex;
+justify-content: center;
+margin-top:5em;
+.form_mat_field{
+margin-right: 1em;
+}
+}
+#container_table{
+    display: flex;
+    justify-content: center;
+    table {
+        width: 80%
+    
+     }
+}
+
+#container_filter {
+    padding-left: 10em;
+    .mat_field{
+        margin-right: 1em;
+        }
+    
+}

@@ -1,0 +1,26 @@
+<div id="container">
+    <form [formGroup]="form">
+      <mat-form-field class="form_mat_field">
+        <input matInput placeholder="titre" formControlName="originalTitle">
+        <mat-error>
+          Ce livre n'existe pas
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form_mat_field">
+          <input matInput placeholder="Année de création" formControlName="startYear">
+          <mat-error>
+            Ce livre n'existe pas
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form_mat_field">
+            <input matInput placeholder="Nom du livre" formControlName="genres">
+            <mat-error>
+              Ce livre n'existe pas
+            </mat-error>
+          </mat-form-field>
+        </form>
+        <div class="button">
+            <button type="submit" mat-raised-button color="primary" (click)="save(form.value)">Sauvegarder</button>
+        </div>
+      </div>
+      

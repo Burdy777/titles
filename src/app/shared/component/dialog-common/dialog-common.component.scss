@@ -1,0 +1,13 @@
+#container {
+    display: flex;
+    justify-content: center;
+    margin-top:5em;
+    flex-direction: column;
+    .form_mat_field{
+    margin-right: 1em;
+    }
+.button {
+    display: flex;
+    justify-content: center;
+}
+}
