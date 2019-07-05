@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
+import { TitleInterface } from 'src/app/domain/model/title.interface';
 
 export interface EventRepository {
-    getBooks(): Observable<any>;
+    getFilms(): Observable<Array<TitleInterface>>;
 }

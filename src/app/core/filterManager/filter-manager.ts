@@ -1,25 +1,27 @@
 import { FilterInterface } from'./filter-manager.interface' 
 import { Injectable } from '@angular/core';
 import { element } from 'protractor';
+import { TitleInterface } from 'src/app/domain/model/title.interface';
 
 @Injectable() 
 export class FilterManager implements FilterInterface {
-
-    constructor(){}
-
-    find(list:any[], value:any){
-        if(!value.dateBegin) {
-        const listFilter = list.filter(element => (
-            element.primaryTitle.toLowerCase().trim().includes(value.title.toLowerCase().trim()) 
-            || element.originalTitle.toLowerCase().trim().includes(value.title.toLowerCase().trim()))
-            );
-       return listFilter;
+constructor(){}
+    /**
+    * 
+    * filter either on the title or the year and title
+    */
+filter(list:any[], value:any): Array<TitleInterface>{
+if(!value.dateBegin) {
+    const listFilter = list.filter(element => (
+        element.primaryTitle.toLowerCase().trim().indexOf(value.title.toLowerCase().trim()) !== -1 ||
+        element.originalTitle.toLowerCase().trim().indexOf(value.title.toLowerCase().trim()) !== -1 ));
+    return listFilter;
     } else {
         const listFilter = list.filter(element => (
-            element.primaryTitle.toLowerCase().trim().includes(value.title.toLowerCase().trim()) 
-            || element.originalTitle.toLowerCase().trim().includes(value.title.toLowerCase().trim())) && +value.dateBegin <= +element.startYear);
+        element.primaryTitle.toLowerCase().trim().indexOf(value.title.toLowerCase().trim()) !== -1 ||
+        element.originalTitle.toLowerCase().trim().indexOf(value.title.toLowerCase().trim()) !== -1) 
+        && +value.dateBegin <= +element.startYear);
        return listFilter;
-    }
-       
-    }
+    } 
+}
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { BookService } from 'src/app/domain/service/books.services';
+import { FormGroup } from '@angular/forms';
+import { FilmsService } from 'src/app/domain/services/films.services';
+import { RxwebValidators, RxFormBuilder } from '@rxweb/reactive-form-validators';
+import { TitleInterface } from 'src/app/domain/model/title.interface';
 
 @Component({
   selector: 'app-dialog-common',
@@ -9,35 +11,39 @@ import { BookService } from 'src/app/domain/service/books.services';
   styleUrls: ['./dialog-common.component.scss']
 })
 export class DialogCommonComponent implements OnInit {
-form:FormGroup;
-  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: any, private fb:FormBuilder,
-  @Inject('BookService') public bookService:BookService ) { }
+  formGroup:FormGroup;
+  constructor(public dialogRef: MatDialogRef<any>, @Inject(MAT_DIALOG_DATA) public data: TitleInterface, private fb:RxFormBuilder,
+  @Inject('FilmsService') public filmsService:FilmsService ) { }
 
   ngOnInit() {
-    this.form = this.buildForm(this.data);
-    this.form.patchValue(this.data);
+    this.formGroup = this.buildForm();
+    this.formGroup.patchValue(this.data);
   }
 
-  private buildForm(data:any){
+  private buildForm(): FormGroup{
     return this.fb.group({
-      'originalTitle': this.fb.control(''),
-      'startYear': this.fb.control(''),
-      'genres': this.fb.control('')
+      originalTitle: ['', [RxwebValidators.required(),RxwebValidators.minLength({value:2})]],
+      startYear: ['', [RxwebValidators.minLength({value:4}),RxwebValidators.required()]],
+      genres: ['',[RxwebValidators.required(),RxwebValidators.minLength({value:2})]]
     })
     
   }
 
+  /**
+    * 
+    * filter either on the title or the year and title
+    */
   public save(value) {
-    const books:any[] = this.bookService.books.value;
-    books.forEach((book) => {
-      if(book.tconst === this.data.tconst) {
+    const films:any[] = this.filmsService.films.value;
+    films.forEach((film) => {
+      if(film.tconst === this.data.tconst) {
         this.data.originalTitle = value.originalTitle;
         this.data.primaryTitle = value.originalTitle;
         this.data.startYear = value.startYear;
         this.data.genres = value.genres;
       }
     })
-    this.bookService.books.next(books)
+    this.filmsService.films.next(films)
     this.dialogRef.close(this.data)
   }
 }

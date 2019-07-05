@@ -1,4 +1,5 @@
+import { TitleInterface } from 'src/app/domain/model/title.interface';
 
 export interface FilterInterface {
-    find(list:any[], title:string): any[];
+    filter(list:any[], title:string): Array<TitleInterface>;
 }

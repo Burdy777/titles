@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BooksComponent } from './books.component';
-import { BookService } from '../../domain/service/books.services';
+import { FilmsComponent } from './films.component';
 import { RouterModule } from '@angular/router';
-import { booksRoutes } from './book-routing'
+import { filmsRoutes } from './films-routing'
 import { HttpClient } from '@angular/common/http';
 import { EventHttpProxy } from 'src/app/infrastructure/http-proxy/event-http-proxy';
 import { EventRepository } from 'src/app/infrastructure/contracts/eventRepository';
@@ -11,37 +10,37 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 
 import { CommonModule } from '@angular/common';
-import { MaterialComponents } from './material-component';
+import { MaterialModule } from './material';
 import { DialogCommonComponent } from 'src/app/shared/component/dialog-common/dialog-common.component';
 import { FilterManager } from 'src/app/core/filterManager/filter-manager';
-import { BooksResolver } from 'src/app/shared/resolver/books-resolver';
+import { FilmResolver } from 'src/app/shared/resolver/films-resolver';
+import { FilmsService } from 'src/app/domain/services/films.services';
 
 export function getEventRepository(http:HttpClient) {
   return new EventHttpProxy(http);
 };
 
-export function getBookService(eventRepository:EventRepository, filtre:FilterManager){
-  return new BookService(eventRepository, filtre);
+export function getFilmService(eventRepository:EventRepository, filtre:FilterManager){
+  return new FilmsService(eventRepository, filtre);
 };
 
 @NgModule({
   declarations: [
-    BooksComponent,
+    FilmsComponent,
     DialogCommonComponent
-    
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
-    ...MaterialComponents,
-    RouterModule.forChild(booksRoutes)
+    ...MaterialModule,
+    RouterModule.forChild(filmsRoutes)
   ],
   providers: [
     {provide:'EventRepository', useFactory: getEventRepository, deps:[HttpClient]},
-    {provide:'BookService', useFactory: getBookService, deps:['EventRepository', FilterManager]},
-    BooksResolver
+    {provide:'FilmsService', useFactory: getFilmService, deps:['EventRepository', FilterManager]},
+    FilmResolver
   ],
   entryComponents: [DialogCommonComponent]
 })
-export class BooksModule { }
+export class FilmsModule { }

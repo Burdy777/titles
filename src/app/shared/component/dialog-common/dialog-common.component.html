@@ -1,26 +1,26 @@
 <div id="container">
-    <form [formGroup]="form">
+    <form [formGroup]="formGroup">
       <mat-form-field class="form_mat_field">
-        <input matInput placeholder="titre" formControlName="originalTitle">
+        <input matInput placeholder="titre" formControlName="originalTitle" required>
         <mat-error>
-          Ce livre n'existe pas
+          Ce champs est obligaoire et requiert 2 caratères minimum 
         </mat-error>
       </mat-form-field>
       <mat-form-field class="form_mat_field">
-          <input matInput placeholder="Année de création" formControlName="startYear">
+          <input matInput placeholder="Année de création" formControlName="startYear" required>
           <mat-error>
-            Ce livre n'existe pas
+            Requis: 4 chiffres minimum, exemple: 1972
           </mat-error>
         </mat-form-field>
         <mat-form-field class="form_mat_field">
-            <input matInput placeholder="Nom du livre" formControlName="genres">
+            <input matInput placeholder="Nom du film" formControlName="genres" required>
             <mat-error>
-              Ce livre n'existe pas
+              Ce champs est obligaoire et requiert 2 caratères minimum
             </mat-error>
           </mat-form-field>
         </form>
         <div class="button">
-            <button type="submit" mat-raised-button color="primary" (click)="save(form.value)">Sauvegarder</button>
+            <button type="submit" mat-raised-button color="primary" (click)="save(formGroup.value)" [disabled]="formGroup.invalid">Sauvegarder</button>
         </div>
       </div>
       
